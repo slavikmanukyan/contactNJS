@@ -1,0 +1,39 @@
+<form class="form-inline">
+    <label for="search">Search: </label>
+     <input ng-model="search"  id="search" class="form-control" ng-disabled="nocontacts">
+</form>
+    <div ng-hide="contacts.length || nocontacts">
+    <img src="img/ajax-loader.gif" style="margin: 10px auto; ">
+
+</div>
+<div ng-show="nocontacts">
+    <p style="font-size: 20px;color: red;">There where no contacts</p>
+</div>
+<div   ng-repeat="contact in contacts |filter:search" ng-class="{activeList: editable==contact}" style="max-width: 400px;  ">
+   <hr style="margin-bottom: 8px;">
+   <div style="float: left;">{{contact.name}}  |   {{contact.phone}}</div>
+   <button style="float: right; " class="btn btn-primary" ng-click="edit(contact);scroll();">Edit</button>
+    <button style="float: right; margin-right: 5px;" class="btn btn-danger" ng-click="delete(contact)">Delete</button>
+    <hr style="clear: both; margin-top: 50px;">
+</div>
+<div ng-show="showedit" style="clear: both;margin-top: 20px; margin-bottom: 20px;">
+     <form name="editForm" class="form-inline" role="form" novalidate>
+        <div class="form-group">
+            <label class="control-label " for="name">Name:</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" ng-model="edt.name"  required >
+
+        </div>
+        <div class="form-group">
+            <label class="control-label " for="phone">Phone:</label>
+            <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter phone number"  ng-model="edt.phone" ng-pattern="/0[0-9]{2}(-[0-9]{2}){3}/" required >
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary" ng-disabled="editForm.$invalid" ng-click="save(edt);editForm.$setPristine();">Save</button>
+        </div>
+         <p class="alert-danger" ng-show="editForm.$invalid && (editForm.phone.$dirty || editForm.name.$dirty)" style="margin-top: 15px;">Please enter valid data</p>
+    </form>
+</div>
+<div ng-show="saveEdit">
+    <p ng-class="{'alert-danger' : saveE.id==1,'alert-success': saveE.id==2 }">{{saveE.text}}</p>
+</div>

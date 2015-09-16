@@ -1,0 +1,15 @@
+/* app css stylesheet */
+
+
+  input.ng-invalid.ng-dirty:not(#search) {
+  border: 1px solid red;
+}
+ input.ng-valid.ng-dirty:not(#search) {
+  border: 1px solid green;
+}
+.activeList{
+  border-radius: 15px;
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: #428bca;
+}
