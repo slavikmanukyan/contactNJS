@@ -51,8 +51,10 @@ exports.getList=function(){
 
 exports.delete=function(cont,callback,error){
     process.nextTick(function(){
+        console.log(editable,contacts);
+
         var i=indexOf(contacts,cont);
-        if (i!=1) {
+        if (i!=-1) {
             contacts.splice(i, 1);
             callback();
         }
@@ -64,6 +66,7 @@ exports.delete=function(cont,callback,error){
 
 exports.edit=function(editable,callback,error){
     process.nextTick(function() {
+
         var i=indexOf(contacts,editable[0]);
         if (i!=-1) {
             contacts.splice(i, 1, editable[1]);

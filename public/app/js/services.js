@@ -23,16 +23,10 @@ angular.module('contact.services',[]).config(function($httpProvider) {
                 return q.promise;
         },
         edit: function(editable,edt){
-            return $http.post('/edit',[editable,edt]).then(function(res){
-                if(res.data=="ok")
-                    contacts.splice(contacts.indexOf(editable),1,edt);
-                return res.data});
+            return $http.post('/edit',[editable,edt]).then(function(res){return res.data});
         },
         delete: function(contact){
-               return $http.post('/delete',contact).then(function(res){
-                   if (res.data=="ok")
-                   contacts.splice(contacts.indexOf(contact),1);
-                   return res.data});
+               return $http.post('/delete',contact).then(function(res){return res.data});
         }
     }
 }]);
