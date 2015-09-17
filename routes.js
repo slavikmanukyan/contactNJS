@@ -12,18 +12,26 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.post("/delete",function(req,res){
    contacts.delete(req.body,function(){
        res.send('ok');
-   })
+   },function(){
+       res.send('error');
+   });
 
 });
 router.post("/edit",function(req,res){
     contacts.edit(req.body,function(){
         res.send('ok');
+    },function(){
+        res.send('error');
+    },function(){
+        res.send('error');
     });
-})
+});
 
 router.post("/add", function(req, res) {
     contacts.add(req.body,function(){
         res.send("ok");
+    },function(){
+        res.send('error');
     });
 });
 

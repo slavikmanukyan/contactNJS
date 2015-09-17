@@ -3,7 +3,7 @@
  */
 angular.module('contact.services',[]).config(function($httpProvider) {
     $httpProvider.defaults.useXDomain = true;
-    delete $httpProvider.defaults.headers.common['X-Requested-With']}).factory('contactList',['$http','$q','$timeout',function($http,$q,$timeout){
+    delete $httpProvider.defaults.headers.common['X-Requested-With']}).factory('contactList',['$http','$q',function($http,$q){
     var contacts=[];
 
     return {
@@ -17,7 +17,7 @@ angular.module('contact.services',[]).config(function($httpProvider) {
         list: function(){
                 var q=$q.defer();
                 q.notify(contacts);
-                var a= $http.get('/list').then(function(data){contacts=data.data;
+                $http.get('/list').then(function(data){contacts=data.data;
                 q.resolve(contacts);
                 });
                 return q.promise;

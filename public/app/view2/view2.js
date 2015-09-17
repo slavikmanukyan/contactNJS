@@ -9,7 +9,7 @@ angular.module('contact.list', ['ngRoute','contact.services'])
   });
 }])
 
-.controller('View2Ctrl', ['$scope','contactList','$timeout',function($scope,contactList,$timeout) {
+.controller('View2Ctrl', ['$scope','contactList','$timeout','$location',function($scope,contactList,$timeout,$location) {
   var editable,hideShowEdit=function(){
             $timeout(function(){
                 $scope.saveEdit=false;
@@ -19,19 +19,28 @@ angular.module('contact.list', ['ngRoute','contact.services'])
   $scope.contacts=[];
   $scope.filtcontacts=[];
   $scope.saveEdit=false;
-        $timeout(function update(){
+
+        function update(tim){
+            if($location.path()!="/list" && tim){ $timeout.cancel(tim);  return}
   contactList.list().then(function(data){
     $scope.contacts=data;
-    if ($scope.contacts.length==0) $scope.nocontacts=true;
-      $timeout(update,5000);
-  });},5000);
+      console.log($scope.contacts); console.log($scope.contacts,editable,$scope.edt);
+    if ($scope.contacts.length==0) $scope.nocontacts=true; else $scope.nocontacts=false;
+    var t= $timeout(function(){update(t)},5000);
+      console.log(t.$$timeoutId);
+
+  });}
+        update();
   $scope.save=function(edt){
+        console.log($scope.contacts);
         $scope.showedit=false;
         contactList.edit(editable,edt).then(function(res){
             $scope.saveEdit=true;
             if(res=="ok"){
+
                 $scope.saveE={id:2,text:"Contact edited successfully"};
                 angular.extend(editable,edt);
+                console.log($scope.contacts,editable,edt);
                 hideShowEdit();
             }
             else{
