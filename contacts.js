@@ -51,7 +51,7 @@ exports.getList=function(){
 
 exports.delete=function(cont,callback,error){
     process.nextTick(function(){
-        console.log(editable,contacts);
+   
 
         var i=indexOf(contacts,cont);
         if (i!=-1) {
